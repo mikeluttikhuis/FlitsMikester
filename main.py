@@ -10,7 +10,6 @@ speedtrap = False
 r = requests.get(FM_URL)
 r = json.loads(r.text)
 
-
 for feature in r['features']:
     if (feature['properties']['type_description'] == "speedtrap" and
     feature['properties']['country_code'] == "nl" and
