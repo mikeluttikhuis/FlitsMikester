@@ -11,14 +11,17 @@ r = requests.get(FM_URL)
 r = json.loads(r.text)
 
 for feature in r['features']:
-    if (feature['properties']['type_description'] == "speedtrap" and
-    feature['properties']['country_code'] == "nl" and
-    feature['properties']['road'] in ROADS):
-        speedtrap = True
-        road = feature['properties']['road']
-        direction = feature['properties']['direction']
-        data = f"{road}, {direction}"
-        requests.post(NOTIFY_URL, data=data)
+    try:
+        if (feature['properties']['type_description'] == "speedtrap" and
+        feature['properties']['country_code'] == "nl" and
+        feature['properties']['road'] in ROADS):
+            speedtrap = True
+            road = feature['properties']['road']
+            direction = feature['properties']['direction']
+            data = f"{road}, {direction}"
+            requests.post(NOTIFY_URL, data=data)
+    except:
+        pass
 
 if not speedtrap:
     data = "Geen flitsers op woon-werk route"
